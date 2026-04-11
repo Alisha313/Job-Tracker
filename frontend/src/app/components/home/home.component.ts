@@ -8,122 +8,201 @@ import { AuthService } from '../../services/auth.service';
   standalone: true,
   imports: [CommonModule, RouterLink],
   template: `
-    <section class="hero-gradient text-white text-center position-relative">
-      <div class="container py-5 position-relative" style="z-index:1">
-        <p class="mb-2 text-uppercase small fw-bold tracking-wide hero-kicker">CPS 3500 · Job search command center</p>
-        <h1 class="display-4 fw-bold mb-3">
-          <i class="bi bi-briefcase-fill me-2"></i>JobTracker
-        </h1>
-        <p class="lead mb-4 mx-auto hero-lead">
-          Track every application, spot trends, and never lose an interview date — all in one colorful, organized place.
-        </p>
-        @if (!auth.isLoggedIn()) {
-          <div class="d-flex gap-3 justify-content-center flex-wrap">
-            <a routerLink="/register" class="btn btn-light btn-lg px-4 shadow hero-btn">
-              <i class="bi bi-person-plus me-2"></i>Get started
-            </a>
-            <a routerLink="/login" class="btn btn-outline-light btn-lg px-4 hero-btn-outline">
-              <i class="bi bi-box-arrow-in-right me-2"></i>Log in
-            </a>
+    <div class="home-landing">
+      <section class="hl-hero-v2">
+        <div class="hl-hero-inner">
+          <div>
+            <div class="hl-chips">
+              <span class="hl-chip"><span class="hl-chip-dot"></span>CPS 3500 · Senior project</span>
+              <span class="hl-chip">Track · Sync · Export</span>
+            </div>
+            <h1 class="hl-headline">
+              Land the role.<br />
+              <span class="hl-gradient-text">Keep your clarity.</span>
+            </h1>
+            <p class="hl-sub">
+              One calm place for every application — Gmail-aware, dashboard-sharp, and ready for demo day or interview
+              week.
+            </p>
+            <p class="hl-trust">
+              <strong>No noise.</strong> Free to try · Secure login · CSV & PDF when you need them
+            </p>
+            @if (!auth.isLoggedIn()) {
+              <div class="hl-actions">
+                <a routerLink="/register" class="btn btn-lg hl-btn-glow">
+                  <i class="bi bi-lightning-charge-fill me-2"></i>Get started free
+                </a>
+                <a routerLink="/login" class="btn btn-lg hl-btn-outline">
+                  <i class="bi bi-box-arrow-in-right me-2"></i>I have an account
+                </a>
+              </div>
+            } @else {
+              <div class="hl-actions">
+                <a routerLink="/dashboard" class="btn btn-lg hl-btn-glow">
+                  <i class="bi bi-speedometer2 me-2"></i>Open dashboard
+                </a>
+                <a routerLink="/applications" class="btn btn-lg hl-btn-outline">
+                  <i class="bi bi-list-check me-2"></i>My applications
+                </a>
+              </div>
+            }
           </div>
-        } @else {
-          <div class="d-flex gap-3 justify-content-center flex-wrap">
-            <a routerLink="/dashboard" class="btn btn-light btn-lg px-4 shadow hero-btn">
-              <i class="bi bi-speedometer2 me-2"></i>Dashboard
-            </a>
-            <a routerLink="/applications" class="btn btn-outline-light btn-lg px-4 hero-btn-outline">
-              <i class="bi bi-list-check me-2"></i>My applications
-            </a>
+          <div class="hl-showcase-wrap">
+            <div class="hl-showcase card">
+              <div class="hl-sc-top">
+                <span></span><span></span><span></span>
+                <span class="hl-sc-title">JobTracker live</span>
+              </div>
+              <div class="hl-sc-body">
+                <div class="hl-sc-metrics">
+                  <div class="hl-sc-metric">
+                    <span>Active</span>
+                    <strong>24</strong>
+                  </div>
+                  <div class="hl-sc-metric">
+                    <span>Interviews</span>
+                    <strong class="hl-accent">6</strong>
+                  </div>
+                  <div class="hl-sc-metric">
+                    <span>This month</span>
+                    <strong>+9</strong>
+                  </div>
+                </div>
+                <div class="hl-sc-bars" aria-hidden="true">
+                  <div class="bar" style="height:38%"></div>
+                  <div class="bar" style="height:62%"></div>
+                  <div class="bar" style="height:48%"></div>
+                  <div class="bar" style="height:78%"></div>
+                  <div class="bar" style="height:55%"></div>
+                  <div class="bar" style="height:92%"></div>
+                </div>
+                <p class="hl-sc-caption">Preview only — your numbers load from your data</p>
+              </div>
+            </div>
           </div>
-        }
-      </div>
-    </section>
+        </div>
+      </section>
 
-    <section class="container py-5">
-      <h2 class="text-center mb-2 fw-bold page-title">Why JobTracker?</h2>
-      <p class="text-center text-muted mb-5 mx-auto" style="max-width:520px">
-        Built for busy students and job seekers who want clarity — not another spreadsheet.
-      </p>
-      <div class="row g-4">
-        <div class="col-md-4">
-          <div class="card h-100 text-center p-4 feature-tile feature-tile-coral">
-            <i class="bi bi-clipboard-data feature-icon text-warning"></i>
-            <h5 class="mt-3 fw-bold">Everything in one place</h5>
-            <p class="text-muted mb-0">Statuses, notes, links, and interview dates — structured so you can scan fast.</p>
+      <section class="hl-proof">
+        <div class="hl-proof-inner">
+          <div class="hl-proof-item">
+            <div class="hl-stat-num">1</div>
+            <p>Inbox + tracker linked</p>
+          </div>
+          <div class="hl-proof-item">
+            <div class="hl-stat-num">∞</div>
+            <p>Applications, no cap</p>
+          </div>
+          <div class="hl-proof-item">
+            <div class="hl-stat-num">24/7</div>
+            <p>Your data, your pace</p>
+          </div>
+          <div class="hl-proof-item">
+            <div class="hl-stat-num">A+</div>
+            <p>Showcase-ready UI</p>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="card h-100 text-center p-4 feature-tile feature-tile-teal">
-            <i class="bi bi-graph-up-arrow feature-icon text-info"></i>
-            <h5 class="mt-3 fw-bold">Charts that tell a story</h5>
-            <p class="text-muted mb-0">See where you’re applying, how pipelines move, and volume over time.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card h-100 text-center p-4 feature-tile feature-tile-violet">
-            <i class="bi bi-bell feature-icon" style="color:var(--violet)"></i>
-            <h5 class="mt-3 fw-bold">Interview awareness</h5>
-            <p class="text-muted mb-0">Upcoming interviews and recent activity keep you proactive, not reactive.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="py-5 band-strip">
-      <div class="container">
-        <div class="row g-4 align-items-center text-center text-md-start">
-          <div class="col-md-3 col-6">
-            <i class="bi bi-filetype-csv feature-icon-sm text-primary"></i>
-            <p class="mt-2 mb-0 fw-semibold">CSV export</p>
-          </div>
-          <div class="col-md-3 col-6">
-            <i class="bi bi-file-earmark-pdf feature-icon-sm text-danger"></i>
-            <p class="mt-2 mb-0 fw-semibold">PDF reports</p>
-          </div>
-          <div class="col-md-3 col-6">
-            <i class="bi bi-shield-lock feature-icon-sm text-success"></i>
-            <p class="mt-2 mb-0 fw-semibold">Secure accounts</p>
-          </div>
-          <div class="col-md-3 col-6">
-            <i class="bi bi-phone feature-icon-sm" style="color:var(--accent)"></i>
-            <p class="mt-2 mb-0 fw-semibold">Mobile friendly</p>
+      <section class="hl-features-v2">
+        <div class="hl-features-inner-v2">
+          <header class="hl-section-head-v2">
+            <p class="hl-section-kicker">Designed to be shown off</p>
+            <h2 class="hl-section-title">Powerful underneath. Quiet on the surface.</h2>
+            <p class="hl-section-sub">
+              The structure of a spreadsheet, the polish of a product — so your search looks as intentional as you are.
+            </p>
+          </header>
+          <div class="hl-feature-grid">
+            <article class="hl-fcard">
+              <div class="hl-fcard-icon c1"><i class="bi bi-kanban-fill"></i></div>
+              <h3>Pipeline at a glance</h3>
+              <p>Statuses, companies, and dates in one scannable list — with detail pages when you need the full story.</p>
+            </article>
+            <article class="hl-fcard">
+              <div class="hl-fcard-icon c2"><i class="bi bi-envelope-heart"></i></div>
+              <h3>Gmail that actually helps</h3>
+              <p>Connect once and pull job-related context into your tracker instead of drowning in threads.</p>
+            </article>
+            <article class="hl-fcard">
+              <div class="hl-fcard-icon c3"><i class="bi bi-pie-chart-fill"></i></div>
+              <h3>Dashboards that pop</h3>
+              <p>See status mix and role types with charts designed to look good in a demo or a portfolio.</p>
+            </article>
+            <article class="hl-fcard">
+              <div class="hl-fcard-icon c4"><i class="bi bi-calendar2-check"></i></div>
+              <h3>Interview awareness</h3>
+              <p>Surface interview-stage roles and dates so “what’s next?” is always one click away.</p>
+            </article>
+            <article class="hl-fcard">
+              <div class="hl-fcard-icon c5"><i class="bi bi-file-earmark-arrow-down"></i></div>
+              <h3>CSV & PDF exports</h3>
+              <p>Hand off to advisors, mentors, or your own files — filtered lists export in seconds.</p>
+            </article>
+            <article class="hl-fcard">
+              <div class="hl-fcard-icon c6"><i class="bi bi-shield-lock"></i></div>
+              <h3>Your account, your data</h3>
+              <p>Sign in securely; your applications stay tied to you — built for a real class project, not a toy demo.</p>
+            </article>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section class="hl-steps">
+        <div class="hl-steps-inner">
+          <h2 class="hl-steps-title">Three steps to clarity</h2>
+          <div class="hl-step-row">
+            <div class="hl-step">
+              <span class="hl-step-num">1</span>
+              <div>
+                <h4>Create your account</h4>
+                <p>Sign up in seconds — no credit card, no clutter.</p>
+              </div>
+            </div>
+            <div class="hl-step">
+              <span class="hl-step-num">2</span>
+              <div>
+                <h4>Add or sync applications</h4>
+                <p>Type a role manually or let Gmail help fill the pipeline.</p>
+              </div>
+            </div>
+            <div class="hl-step">
+              <span class="hl-step-num">3</span>
+              <div>
+                <h4>Own your search</h4>
+                <p>Use the dashboard and list to steer every follow-up with confidence.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hl-cta-band">
+        <div class="hl-cta-inner">
+          <h2 class="hl-cta-title">Ready when you are.</h2>
+          <p class="hl-cta-sub">One account. One pipeline. Neon optional — clarity included.</p>
+          @if (!auth.isLoggedIn()) {
+            <a routerLink="/register" class="btn btn-lg hl-btn-glow">
+              <i class="bi bi-rocket-takeoff me-2"></i>Create your free account
+            </a>
+          } @else {
+            <a routerLink="/dashboard" class="btn btn-lg hl-btn-glow">
+              <i class="bi bi-arrow-right-circle me-2"></i>Go to dashboard
+            </a>
+          }
+        </div>
+      </section>
+
+      <section class="hl-footer-strip">
+        <div class="hl-strip-inner">
+          <div class="hl-strip-item"><i class="bi bi-filetype-csv"></i><span>CSV export</span></div>
+          <div class="hl-strip-item"><i class="bi bi-file-earmark-pdf"></i><span>PDF reports</span></div>
+          <div class="hl-strip-item"><i class="bi bi-shield-lock"></i><span>Secure login</span></div>
+          <div class="hl-strip-item"><i class="bi bi-phone"></i><span>Works on phone</span></div>
+        </div>
+      </section>
+    </div>
   `,
-  styles: [
-    `
-      .hero-kicker {
-        letter-spacing: 0.12em;
-        opacity: 0.95;
-      }
-      .hero-lead {
-        max-width: 640px;
-        opacity: 0.95;
-      }
-      .hero-btn {
-        border: none;
-        font-weight: 600;
-        color: #312e81 !important;
-      }
-      .hero-btn-outline {
-        font-weight: 600;
-        border-width: 2px;
-      }
-      .feature-icon {
-        font-size: 2.75rem;
-      }
-      .feature-icon-sm {
-        font-size: 2.25rem;
-      }
-      .band-strip {
-        background: linear-gradient(90deg, rgba(79, 70, 229, 0.08), rgba(6, 182, 212, 0.1), rgba(244, 114, 182, 0.08));
-        border-top: 1px solid var(--border);
-        border-bottom: 1px solid var(--border);
-      }
-    `,
-  ],
 })
 export class HomeComponent {
   constructor(public auth: AuthService) {}

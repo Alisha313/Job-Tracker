@@ -39,6 +39,13 @@ export interface Stats {
     companyName: string;
     interviewDate: string;
   }[];
+  interviewSpotlight?: {
+    id: string;
+    jobTitle: string;
+    companyName: string;
+    interviewDate: string | null;
+    bucket: 'upcoming' | 'past' | 'tbd';
+  }[];
   recentActivity: {
     id: string;
     jobTitle: string;

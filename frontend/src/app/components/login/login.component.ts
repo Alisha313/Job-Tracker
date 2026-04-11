@@ -100,7 +100,7 @@ export class LoginComponent {
     this.auth.login(email, password).subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/']);
       },
       error: (err) => {
         this.loading = false;

@@ -118,7 +118,7 @@ export class RegisterComponent {
     this.auth.register(name, email, password).subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/']);
       },
       error: (err) => {
         this.loading = false;

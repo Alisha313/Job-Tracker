@@ -14,28 +14,35 @@ import {
   standalone: true,
   imports: [CommonModule, RouterLink, FormsModule],
   template: `
-    <div class="container py-4">
-      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 page-header">
-        <h2 class="mb-0 page-title">
-          <i class="bi bi-list-check me-2"></i>My Applications
-        </h2>
-        <div class="d-flex gap-2 flex-wrap">
-          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="exportCSV()">
-            <i class="bi bi-filetype-csv me-1"></i>CSV
-          </button>
-          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="exportPDF()">
-            <i class="bi bi-file-earmark-pdf me-1"></i>PDF
-          </button>
+    <div class="applications-page container-fluid px-3 px-md-4 py-4">
+      <header class="app-list-hero">
+        <div>
+          <p class="text-uppercase small fw-bold mb-2" style="letter-spacing:0.1em;color:var(--primary)">Pipeline</p>
+          <h1 class="d-flex align-items-center gap-2 flex-wrap">
+            <i class="bi bi-kanban d-none d-sm-inline" style="color:var(--primary)"></i>
+            Applications
+          </h1>
+          <p>Search, filter, and manage every role — synced fields match what you see on the dashboard.</p>
+        </div>
+        <div class="app-list-actions">
+          <div class="btn-group" role="group" aria-label="Export">
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="exportCSV()">
+              <i class="bi bi-filetype-csv me-1"></i>CSV
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="exportPDF()">
+              <i class="bi bi-file-earmark-pdf me-1"></i>PDF
+            </button>
+          </div>
           <a routerLink="/applications/add" class="btn btn-primary">
-            <i class="bi bi-plus-lg me-1"></i>Add Application
+            <i class="bi bi-plus-lg me-1"></i>Add application
           </a>
         </div>
-      </div>
+      </header>
 
-      <div class="list-toolbar mb-3">
-        <div class="row g-2 align-items-end">
+      <section class="app-filters-panel">
+        <div class="row g-3 align-items-end">
           <div class="col-lg-4 col-md-6">
-            <label class="form-label small text-muted mb-1">Search</label>
+            <label class="form-label mb-1"><i class="bi bi-search me-1"></i>Search</label>
             <input
               type="search"
               class="form-control"
@@ -45,7 +52,7 @@ import {
             />
           </div>
           <div class="col-lg-2 col-md-3">
-            <label class="form-label small text-muted mb-1">Status</label>
+            <label class="form-label mb-1"><i class="bi bi-funnel me-1"></i>Status</label>
             <select class="form-select" [(ngModel)]="statusFilter" (ngModelChange)="applyFilter()">
               <option [ngValue]="null">All statuses</option>
               @for (s of statuses; track s) {
@@ -54,7 +61,7 @@ import {
             </select>
           </div>
           <div class="col-lg-2 col-md-3">
-            <label class="form-label small text-muted mb-1">Job type</label>
+            <label class="form-label mb-1"><i class="bi bi-briefcase me-1"></i>Job type</label>
             <select class="form-select" [(ngModel)]="jobTypeFilter" (ngModelChange)="applyFilter()">
               <option [ngValue]="null">All types</option>
               @for (j of jobTypes; track j) {
@@ -63,7 +70,7 @@ import {
             </select>
           </div>
           <div class="col-lg-4 col-md-12">
-            <label class="form-label small text-muted mb-1">Sort by</label>
+            <label class="form-label mb-1"><i class="bi bi-sort-down me-1"></i>Sort</label>
             <select class="form-select" [(ngModel)]="sortBy" (ngModelChange)="applyFilter()">
               <option value="appliedDesc">Application date (newest)</option>
               <option value="appliedAsc">Application date (oldest)</option>
@@ -73,22 +80,25 @@ import {
             </select>
           </div>
         </div>
-        <div class="small text-muted mt-2 d-flex flex-wrap align-items-baseline gap-2">
+        <div class="app-filters-meta text-muted d-flex flex-wrap align-items-baseline gap-2">
           <span
-            >Showing <strong>{{ filtered.length }}</strong> of {{ applications.length }} applications</span
+            >Showing <strong class="text-dark">{{ filtered.length }}</strong> of
+            <strong class="text-dark">{{ applications.length }}</strong> applications</span
           >
           @if (applications.length && statusBreakdown) {
-            <span class="text-secondary">· {{ statusBreakdown }}</span>
+            <span class="d-none d-md-inline">·</span>
+            <span class="small">{{ statusBreakdown }}</span>
           }
         </div>
-        <p class="small text-muted mb-0 mt-1 fst-italic">
-          Filters narrow this list. Each row’s badge is the status stored for that application (imports from email
-          usually start as Applied unless the message looks like an interview or decision).
+        <p class="app-filters-hint mb-0">
+          <i class="bi bi-info-circle me-1 text-primary"></i>
+          Filters only affect this list. Email imports often stay <strong>Applied</strong> unless the message looks like
+          an interview, offer, or decision.
         </p>
-      </div>
+      </section>
 
       @if (loading) {
-        <div class="spinner-overlay">
+        <div class="spinner-overlay py-5">
           <div class="spinner-border text-primary" role="status">
             <span class="visually-hidden">Loading...</span>
           </div>
@@ -96,33 +106,37 @@ import {
       }
 
       @if (!loading && applications.length === 0) {
-        <div class="text-center py-5 card card-glass p-5">
-          <i class="bi bi-inbox display-1" style="color: var(--primary-light)"></i>
-          <p class="text-muted mt-3 mb-0 fs-5">You haven’t added any applications yet.</p>
-          <p class="text-muted small">Start your pipeline with the first role you apply to.</p>
-          <a routerLink="/applications/add" class="btn btn-primary mt-2">
+        <div class="text-center py-5 px-3 card app-empty-state">
+          <div class="rounded-4 d-inline-flex align-items-center justify-content-center mb-3" style="width:88px;height:88px;background:linear-gradient(145deg,#eef2ff,#e0e7ff)">
+            <i class="bi bi-inbox" style="font-size:2.5rem;color:var(--primary)"></i>
+          </div>
+          <h2 class="h4 fw-bold">No applications yet</h2>
+          <p class="text-muted mb-1">Your pipeline starts with the first role you track.</p>
+          <a routerLink="/applications/add" class="btn btn-primary mt-3 px-4">
             <i class="bi bi-plus-lg me-1"></i>Add application
           </a>
         </div>
       }
 
       @if (!loading && applications.length > 0 && filtered.length === 0) {
-        <div class="text-center py-5 card card-glass p-5">
-          <i class="bi bi-funnel display-1" style="color: var(--primary-light)"></i>
-          <p class="text-muted mt-3 mb-0 fs-5">No applications match these filters.</p>
-          <p class="text-muted small">Clear search or change status / type to see more.</p>
-          <button type="button" class="btn btn-outline-primary mt-2 me-2" (click)="clearFilters()">Clear filters</button>
-          <a routerLink="/applications/add" class="btn btn-primary mt-2">
+        <div class="text-center py-5 px-3 card app-empty-state">
+          <div class="rounded-4 d-inline-flex align-items-center justify-content-center mb-3" style="width:88px;height:88px;background:linear-gradient(145deg,#fff7ed,#ffedd5)">
+            <i class="bi bi-funnel" style="font-size:2.5rem;color:#c2410c"></i>
+          </div>
+          <h2 class="h4 fw-bold">No matches</h2>
+          <p class="text-muted mb-3">Try clearing filters or broadening search.</p>
+          <button type="button" class="btn btn-outline-primary me-2" (click)="clearFilters()">Clear filters</button>
+          <a routerLink="/applications/add" class="btn btn-primary">
             <i class="bi bi-plus-lg me-1"></i>Add application
           </a>
         </div>
       }
 
       @if (!loading && filtered.length > 0) {
-        <div class="card d-none d-md-block overflow-hidden">
+        <div class="app-table-card d-none d-md-block">
           <div class="table-responsive">
-            <table class="table table-hover mb-0 align-middle">
-              <thead class="table-light">
+            <table class="table app-table mb-0 align-middle">
+              <thead>
                 <tr>
                   <th>Job title</th>
                   <th>Company</th>
@@ -136,14 +150,16 @@ import {
               <tbody>
                 @for (app of filtered; track app._id) {
                   <tr>
-                    <td class="fw-semibold">{{ app.jobTitle }}</td>
-                    <td>{{ app.companyName }}</td>
-                    <td><span class="badge bg-light text-dark border">{{ app.jobType }}</span></td>
+                    <td>
+                      <a [routerLink]="['/applications', app._id]" class="job-title-link">{{ app.jobTitle }}</a>
+                    </td>
+                    <td class="company-cell">{{ app.companyName }}</td>
+                    <td><span class="type-pill">{{ app.jobType }}</span></td>
                     <td><span [class]="'badge-status ' + statusBadgeClass(app.status)">{{ app.status }}</span></td>
-                    <td>{{ app.applicationDate | date: 'mediumDate' }}</td>
-                    <td>{{ app.interviewDate ? (app.interviewDate | date: 'mediumDate') : '—' }}</td>
+                    <td class="text-nowrap">{{ app.applicationDate | date: 'mediumDate' }}</td>
+                    <td class="text-nowrap text-muted">{{ app.interviewDate ? (app.interviewDate | date: 'mediumDate') : '—' }}</td>
                     <td class="text-end">
-                      <div class="btn-group btn-group-sm">
+                      <div class="app-table-actions">
                         <a [routerLink]="['/applications', app._id]" class="btn btn-outline-primary" title="View">
                           <i class="bi bi-eye"></i>
                         </a>
@@ -164,18 +180,23 @@ import {
 
         <div class="d-md-none">
           @for (app of filtered; track app._id) {
-            <div class="card mb-3 p-3">
+            <div class="card app-mobile-card mb-3">
               <div class="d-flex justify-content-between align-items-start gap-2">
-                <div>
-                  <h6 class="mb-1 fw-bold">{{ app.jobTitle }}</h6>
-                  <p class="mb-1 text-muted">{{ app.companyName }}</p>
+                <div class="flex-grow-1 min-w-0">
+                  <h2 class="app-mc-title">
+                    <a [routerLink]="['/applications', app._id]">{{ app.jobTitle }}</a>
+                  </h2>
+                  <p class="mb-0 text-muted small">{{ app.companyName }}</p>
                 </div>
-                <span [class]="'badge-status ' + statusBadgeClass(app.status)">{{ app.status }}</span>
+                <span [class]="'badge-status ' + statusBadgeClass(app.status)" style="flex-shrink:0">{{ app.status }}</span>
               </div>
-              <div class="d-flex flex-wrap gap-2 mt-2 text-muted small">
-                <span><i class="bi bi-briefcase me-1"></i>{{ app.jobType }}</span>
-                <span><i class="bi bi-geo-alt me-1"></i>{{ app.location || '—' }}</span>
-                <span><i class="bi bi-calendar me-1"></i>{{ app.applicationDate | date: 'shortDate' }}</span>
+              <div class="app-mobile-meta">
+                <span><i class="bi bi-briefcase me-1 text-primary"></i>{{ app.jobType }}</span>
+                <span><i class="bi bi-geo-alt me-1 text-primary"></i>{{ app.location || '—' }}</span>
+                <span><i class="bi bi-calendar me-1 text-primary"></i>{{ app.applicationDate | date: 'shortDate' }}</span>
+                @if (app.interviewDate) {
+                  <span><i class="bi bi-calendar-event me-1 text-success"></i>{{ app.interviewDate | date: 'shortDate' }}</span>
+                }
               </div>
               <div class="d-flex gap-2 mt-3">
                 <a [routerLink]="['/applications', app._id]" class="btn btn-outline-primary btn-sm flex-fill">View</a>
