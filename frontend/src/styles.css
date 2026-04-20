@@ -2,6 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Outfit:wght@500;600;700;800;900&display=swap');
 
 :root {
+  /* Slightly larger base type for readability (browser default is often 16px) */
+  --app-base-size: clamp(1rem, 0.2vw + 0.95rem, 1.125rem);
   --font-display: 'Outfit', 'DM Sans', system-ui, sans-serif;
   --primary: #4f46e5;
   --primary-dark: #4338ca;
@@ -26,19 +28,54 @@
   --radius-sm: 12px;
 }
 
+html {
+  height: 100%;
+}
+
 body {
   font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  font-size: var(--app-base-size);
+  line-height: 1.6;
   background-color: var(--bg);
   background-image: var(--bg-mesh);
   background-attachment: fixed;
   color: var(--text);
   margin: 0;
-  min-height: 100vh;
+  min-height: 100%;
+  min-height: 100dvh;
+}
+
+/* Full viewport column: navbar + growing main + footer */
+.app-root-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  min-height: 100dvh;
 }
 
 .main-content {
-  min-height: calc(100vh - 160px);
+  flex: 1 1 auto;
   width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Forms & tables inherit readable size */
+.form-control,
+.form-select {
+  font-size: 1em;
+  line-height: 1.5;
+  padding: 0.55rem 0.9rem;
+  min-height: 2.75rem;
+}
+
+.btn {
+  font-size: 1em;
+}
+
+.footer-slab .text-muted,
+footer .small {
+  font-size: 0.95rem !important;
 }
 
 /* Wider content — use more of the screen on large displays */
@@ -138,7 +175,7 @@ footer .container {
 
 /* Status pills */
 .badge-status {
-  font-size: 0.78rem;
+  font-size: 0.875rem;
   padding: 6px 12px;
   border-radius: 999px;
   font-weight: 600;
@@ -197,7 +234,7 @@ footer .container {
 }
 
 .table thead th {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--text-muted);
@@ -232,7 +269,8 @@ a:hover {
 
 /* Auth & hero helpers */
 .auth-shell {
-  min-height: calc(100vh - 180px);
+  /* Fill space below navbar + footer so the card stays vertically centered */
+  min-height: calc(100dvh - 9.5rem);
   display: flex;
   align-items: center;
 }
@@ -1096,7 +1134,7 @@ a:hover {
 .app-list-hero p {
   margin: 0;
   color: var(--text-muted);
-  font-size: 0.98rem;
+  font-size: 1.05rem;
   max-width: 36rem;
 }
 .app-list-actions {
@@ -1121,7 +1159,7 @@ a:hover {
 }
 .app-filters-panel .form-label {
   font-weight: 600;
-  font-size: 0.78rem;
+  font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--text-muted);
@@ -1154,13 +1192,13 @@ a:hover {
 }
 .app-table {
   margin: 0;
-  font-size: 0.98rem;
+  font-size: 1rem;
 }
 .app-table thead th {
   background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%) !important;
   font-family: inherit;
   font-weight: 700;
-  font-size: 0.72rem;
+  font-size: 0.8125rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #475569 !important;

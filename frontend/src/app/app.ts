@@ -8,6 +8,7 @@ import { AuthService } from './services/auth.service';
 @Component({
   selector: 'app-root',
   standalone: true,
+  host: { class: 'app-root-layout' },
   imports: [RouterOutlet, NavbarComponent, FooterComponent, AiChatComponent],
   template: `
     <app-navbar />

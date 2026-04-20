@@ -42,9 +42,11 @@ job-tracker/
 ```bash
 cd backend
 npm install
-# Update .env with your MongoDB URI and JWT secret
+# Copy .env.example to .env — set MONGO_URI, JWT_SECRET, and optionally PORT (default 5001)
 node server.js
 ```
+
+The API listens on **port 5001** by default (matching `frontend` `environment*.ts` `apiBase`). If you change `PORT` in `.env`, update the Angular `apiBase` URLs to match.
 
 ### Frontend
 
