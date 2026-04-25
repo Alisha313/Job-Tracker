@@ -16,9 +16,12 @@ import { Component } from '@angular/core';
   styles: [
     `
       .footer-slab {
-        background: linear-gradient(180deg, #fff 0%, #f8fafc 100%);
-        border-top: 3px solid transparent;
-        border-image: linear-gradient(90deg, #4f46e5, #06b6d4, #ec4899) 1;
+        background: #ffffff;
+        border-top: 1px solid #e5e7eb;
+      }
+      .footer-slab p {
+        color: #64748b !important;
+        font-weight: 500;
       }
     `,
   ],

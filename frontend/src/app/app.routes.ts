@@ -10,6 +10,7 @@ export const routes: Routes = [
   { path: 'applications/add', loadComponent: () => import('./components/application-form/application-form.component').then(m => m.ApplicationFormComponent), canActivate: [authGuard] },
   { path: 'applications/edit/:id', loadComponent: () => import('./components/application-form/application-form.component').then(m => m.ApplicationFormComponent), canActivate: [authGuard] },
   { path: 'applications/:id', loadComponent: () => import('./components/application-detail/application-detail.component').then(m => m.ApplicationDetailComponent), canActivate: [authGuard] },
+  { path: 'resume', loadComponent: () => import('./components/resume-analyzer/resume-analyzer.component').then(m => m.ResumeAnalyzerComponent), canActivate: [authGuard] },
   { path: 'email', loadComponent: () => import('./components/email-settings/email-settings.component').then(m => m.EmailSettingsComponent), canActivate: [authGuard] },
   { path: 'email-callback', loadComponent: () => import('./components/email-callback/email-callback.component').then(m => m.EmailCallbackComponent), canActivate: [authGuard] },
   { path: '**', redirectTo: '' },

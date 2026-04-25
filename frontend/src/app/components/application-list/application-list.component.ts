@@ -352,7 +352,7 @@ export class ApplicationListComponent implements OnInit {
 
   exportPDF() {
     import('jspdf').then((jsPDFModule) => {
-      import('jspdf-autotable').then(() => {
+      import('jspdf-autotable').then((autoTableModule) => {
         const doc = new jsPDFModule.default();
         doc.setFontSize(18);
         doc.text('Job applications', 14, 20);
@@ -368,7 +368,7 @@ export class ApplicationListComponent implements OnInit {
           a.applicationDate ? new Date(a.applicationDate).toLocaleDateString() : '',
         ]);
 
-        (doc as unknown as { autoTable: (o: object) => void }).autoTable({
+        (doc as any).autoTable({
           head: headers,
           body: rows,
           startY: 35,

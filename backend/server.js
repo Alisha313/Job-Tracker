@@ -27,35 +27,52 @@ const applicationRoutes = require('./routes/applications');
 const statsRoutes = require('./routes/stats');
 const emailRoutes = require('./routes/email');
 const chatRoutes = require('./routes/chat');
+const aiRoutes = require('./routes/ai');
+const resumeAnalyzerRoutes = require('./routes/resume-analyzer');
+const resumeRoutes = require('./routes/resume');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-mongoose
-  .connect(mongoUri)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => {
-    console.error('MongoDB connection error:', err.message);
-    if (err.code === 'ENOTFOUND' || err.syscall === 'querySrv') {
-      console.error(
-        'Hint: Check the hostname in MONGO_URI (Atlas → Connect). Ensure this machine can reach the internet/DNS.'
-      );
-    }
-  });
-
 app.use('/api/auth', authRoutes);
 app.use('/api/applications', applicationRoutes);
 app.use('/api/stats', statsRoutes);
 app.use('/api/email', emailRoutes);
 app.use('/api/chat', chatRoutes);
+app.use('/api/ai', aiRoutes);
+app.use('/api/resume-analyzer', resumeAnalyzerRoutes);
+app.use('/api/resume', resumeRoutes);
 
 app.get('/', (req, res) => {
   res.json({ message: 'Job Application Tracker API - Alisha Patel' });
 });
 
 const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+
+async function startServer() {
+  try {
+    await mongoose.connect(mongoUri);
+    console.log('Connected to MongoDB');
+
+    app.listen(PORT, () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
+  } catch (err) {
+    console.error('MongoDB connection error:', err.message);
+    if (err.code === 'ENOTFOUND' || err.syscall === 'querySrv') {
+      console.error(
+        'Hint: Check the hostname in MONGO_URI (Atlas → Connect). Ensure this machine can reach the internet/DNS.'
+      );
+    }
+    if (/whitelist|not authorized|ECONNREFUSED|timed out|connect/i.test(err.message || '')) {
+      console.error(
+        'Hint: In MongoDB Atlas, allow this computer IP (Network Access) or temporarily allow 0.0.0.0/0 for development.'
+      );
+    }
+    process.exit(1);
+  }
+}
+
+startServer();

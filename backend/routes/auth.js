@@ -1,10 +1,17 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 const User = require('../models/User');
 const router = express.Router();
 
 router.post('/register', async (req, res) => {
   try {
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({
+        message: 'Database unavailable. Check MongoDB Atlas Network Access / IP whitelist, then restart backend.',
+      });
+    }
+
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
@@ -32,6 +39,12 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   try {
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({
+        message: 'Database unavailable. Check MongoDB Atlas Network Access / IP whitelist, then restart backend.',
+      });
+    }
+
     const { email, password } = req.body;
 
     if (!email || !password) {

@@ -19,7 +19,7 @@ export class ChatService {
 
   constructor(private http: HttpClient) {}
 
-  send(messages: ChatMessage[]): Observable<ChatResponse> {
-    return this.http.post<ChatResponse>(this.url, { messages });
+  send(messages: ChatMessage[], context?: any): Observable<ChatResponse> {
+    return this.http.post<ChatResponse>(this.url, { messages, context });
   }
 }

@@ -39,7 +39,8 @@ import { AuthService } from '../../services/auth.service';
                 <i class="bi bi-house me-1"></i>Home
               </a>
             </li>
-            @if (auth.isLoggedIn()) {
+
+            <ng-container *ngIf="auth.isLoggedIn(); else loggedOut">
               <li class="nav-item">
                 <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
                   <i class="bi bi-speedometer2 me-1"></i>Dashboard
@@ -48,6 +49,11 @@ import { AuthService } from '../../services/auth.service';
               <li class="nav-item">
                 <a class="nav-link" routerLink="/applications" routerLinkActive="active">
                   <i class="bi bi-list-check me-1"></i>Applications
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/resume" routerLinkActive="active">
+                  <i class="bi bi-file-earmark-person me-1"></i>Resume AI
                 </a>
               </li>
               <li class="nav-item">
@@ -73,7 +79,9 @@ import { AuthService } from '../../services/auth.service';
                   <i class="bi bi-box-arrow-right me-1"></i>Logout
                 </a>
               </li>
-            } @else {
+            </ng-container>
+
+            <ng-template #loggedOut>
               <li class="nav-item">
                 <a class="nav-link" routerLink="/login" routerLinkActive="active">
                   <i class="bi bi-box-arrow-in-right me-1"></i>Login
@@ -84,7 +92,7 @@ import { AuthService } from '../../services/auth.service';
                   <i class="bi bi-person-plus me-1"></i>Register
                 </a>
               </li>
-            }
+            </ng-template>
           </ul>
         </div>
       </div>
@@ -93,46 +101,63 @@ import { AuthService } from '../../services/auth.service';
   styles: [
     `
       .nav-app {
-        min-height: 4.25rem;
-        background: linear-gradient(120deg, #312e81 0%, #4f46e5 40%, #0e7490 85%);
+        min-height: 4.75rem;
+        background: linear-gradient(90deg, #0f172a 0%, #111827 55%, #1e293b 100%);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.25);
       }
       .app-shell {
-        max-width: min(96vw, 1680px);
+        max-width: min(98vw, 1920px);
         margin: 0 auto;
       }
       .brand-text {
-        font-size: 1.55rem;
+        font-size: 1.45rem;
         font-weight: 800;
-        letter-spacing: -0.02em;
+        letter-spacing: -0.01em;
+        color: #f8fafc;
       }
       .brand-icon {
-        width: 2.6rem;
-        height: 2.6rem;
-        background: rgba(255, 255, 255, 0.2);
-        font-size: 1.25rem;
+        width: 2.4rem;
+        height: 2.4rem;
+        background: linear-gradient(135deg, #60a5fa, #2563eb);
+        color: #f8fafc;
+        font-size: 1.1rem;
       }
       .navbar .nav-link {
-        font-size: 1.02rem;
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
+        color: #e2e8f0;
+        font-weight: 600;
+        font-size: 1.03rem;
+        padding-top: 0.55rem;
+        padding-bottom: 0.55rem;
+        border-radius: 10px;
       }
       .nav-link.active {
         font-weight: 700;
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.12);
+        background: rgba(59, 130, 246, 0.18);
+        color: #bfdbfe;
       }
       .nav-pill.active {
-        background: rgba(255, 255, 255, 0.2) !important;
+        background: rgba(59, 130, 246, 0.24) !important;
       }
       .btn-add {
-        background: #fbbf24;
-        color: #1e1b4b !important;
+        background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+        color: #fff !important;
         font-weight: 700;
         border: none;
       }
       .btn-add:hover {
-        background: #fcd34d;
-        color: #1e1b4b !important;
+        background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+        color: #fff !important;
+      }
+      .navbar-toggler {
+        border-color: #64748b;
+      }
+      .navbar-toggler:focus {
+        box-shadow: 0 0 0 0.2rem rgba(96, 165, 250, 0.25);
+      }
+      @media (max-width: 991px) {
+        .navbar .nav-link {
+          margin-top: 0.2rem;
+        }
       }
     `,
   ],
